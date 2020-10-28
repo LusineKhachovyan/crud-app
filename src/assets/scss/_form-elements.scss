@@ -1,0 +1,86 @@
+.form-wrap {
+    padding: 30px 35px;
+
+    h2 {
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    .form-actions {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 40px;
+
+        button {
+            margin: 0 10px;
+        }
+    }
+}
+
+.form-element {
+    margin-bottom: 25px;
+
+    label {
+        display: block;
+        font-size: 12px;
+        font-weight: 600;
+        margin-bottom: 4px;
+    }
+
+    input {
+        width: 100%;
+        border: 1px solid #bcbcbc;
+        border-radius: 6px;
+        font-size: 16px;
+        line-height: 20px;
+        padding: 10px 15px;
+        transition: 0.3s;
+
+        &:focus,
+        &:active {
+            border-color: #0785da;
+            box-shadow: 0 0 5px 1px rgba(#68a3ca, 0.35);
+        }
+
+        &.invalid {
+            border-color: red;
+        }
+    }
+
+    .react-select {
+        &__control {
+            border-color: #bcbcbc;
+            border-radius: 6px;
+            min-height: 42px;
+        }
+
+        &__value-container {
+            padding-left: 13px;
+        }
+
+        &__single-value {
+            line-height: 20px;
+        }
+
+        &__control--is-focused {
+            border-color: #0785da;
+            box-shadow: 0 0 5px 1px rgba(#68a3ca, 0.35);
+        }
+
+        &__option {
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        &__option--is-selected {
+            background: #0785da;
+        }
+    }
+
+    .error-msg {
+        color: red;
+        font-size: 12px;
+        margin-top: 6px;
+    }
+}
