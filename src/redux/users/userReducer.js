@@ -1,4 +1,4 @@
-import { SET_USERS, SET_USERS_ERROR, CLEAR_USERS } from '../actionTypes';
+import { SET_USERS, SET_USERS_ERROR, CLEAR_USERS, DELETE_USER } from '../actionTypes';
 
 const initialState = {
     users: null,
@@ -25,6 +25,15 @@ const userReducer = (state = initialState, action) => {
                 users: null,
                 loading: true,
                 error: '',
+            };
+        case DELETE_USER:
+            let id = action.id;
+            let usersClone = [...state.users];
+            usersClone = usersClone.filter((user) => user.id !== id);
+
+            return {
+                ...state,
+                users: usersClone,
             };
         default:
             return state;

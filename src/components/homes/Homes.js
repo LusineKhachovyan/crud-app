@@ -1,25 +1,42 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faTrash, faPlus } from '@fortawesome/free-solid-svg-icons';
 import Loader from '../shared/Loader';
-import { getHomes, clearHomes } from '../../redux/homes/homeActions';
+import ConfirmationModal from '../shared/ConfirmationModal';
+import { getHomes, clearHomes, removeHome } from '../../redux/homes/homeActions';
 
 function Homes() {
+    const dispatch = useDispatch();
     const homes = useSelector((state) => state.homes.homes);
     const loading = useSelector((state) => state.homes.loading);
     const error = useSelector((state) => state.homes.error);
-
-    const dispatch = useDispatch();
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [currentHomeId, setCurrentHomeId] = useState();
 
     useEffect(() => {
         dispatch(getHomes());
 
         return () => {
             dispatch(clearHomes());
+            setCurrentHomeId();
         };
     }, [dispatch]);
+
+    const openModal = (homeId) => {
+        setModalIsOpen(true);
+        setCurrentHomeId(homeId);
+    };
+
+    const closeModal = () => {
+        setModalIsOpen(false);
+    };
+
+    const deleteHome = () => {
+        setModalIsOpen(false);
+        dispatch(removeHome(currentHomeId));
+    };
 
     const homesList =
         homes &&
@@ -33,10 +50,14 @@ function Homes() {
                 <td>{home.bedrooms}</td>
                 <td>
                     <div className="actions">
-                        <button className="icon-btn edit-btn">
+                        <button type="button" className="icon-btn edit-btn">
                             <FontAwesomeIcon icon={faPen} />
                         </button>
-                        <button className="icon-btn delete-btn">
+                        <button
+                            type="button"
+                            className="icon-btn delete-btn"
+                            onClick={() => openModal(home.id)}
+                        >
                             <FontAwesomeIcon icon={faTrash} />
                         </button>
                     </div>
@@ -93,6 +114,16 @@ function Homes() {
                         </table>
                     </div>
                 )
+            )}
+
+            {modalIsOpen && (
+                <ConfirmationModal
+                    isOpen={modalIsOpen}
+                    onClose={closeModal}
+                    onConfirm={deleteHome}
+                    title="Delete Home"
+                    bodyText="Are you sure you want to delete this home?"
+                ></ConfirmationModal>
             )}
         </div>
     );

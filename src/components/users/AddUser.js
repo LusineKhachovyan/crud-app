@@ -37,12 +37,16 @@ function AddUser() {
                         <label>Confirm Password</label>
                         <input type="password" autoComplete="off" />
                     </div>
-                </form>
 
-                <div className="form-actions">
-                    <button className="btn outline">Cancel</button>
-                    <button className="btn primary">Add</button>
-                </div>
+                    <div className="form-actions">
+                        <button type="button" className="btn outline">
+                            Cancel
+                        </button>
+                        <button type="button" className="btn primary">
+                            Add
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     );

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { SET_USERS, SET_USERS_ERROR, CLEAR_USERS } from '../actionTypes';
+import { SET_USERS, SET_USERS_ERROR, CLEAR_USERS, DELETE_USER } from '../actionTypes';
 
 const apiUrl = process.env.REACT_APP_BASE_API_URL;
 
@@ -27,4 +27,23 @@ export const setUsersError = (error) => {
 
 export const clearUsers = () => {
     return { type: CLEAR_USERS };
+};
+
+export const removeUser = (userId) => {
+    return (dispatch) => {
+        axios
+            .delete(`${apiUrl}/users/${userId}`)
+            .then((response) => {
+                if (response.status === 200) {
+                    dispatch(deleteUser(userId));
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+};
+
+export const deleteUser = (id) => {
+    return { type: DELETE_USER, id };
 };

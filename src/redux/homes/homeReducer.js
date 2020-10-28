@@ -1,4 +1,4 @@
-import { SET_HOMES, SET_HOMES_ERROR, CLEAR_HOMES } from '../actionTypes';
+import { SET_HOMES, SET_HOMES_ERROR, CLEAR_HOMES, DELETE_HOME } from '../actionTypes';
 
 const initialState = {
     homes: null,
@@ -25,6 +25,15 @@ const homeReducer = (state = initialState, action) => {
                 homes: null,
                 loading: true,
                 error: '',
+            };
+        case DELETE_HOME:
+            let id = action.id;
+            let homesClone = [...state.homes];
+            homesClone = homesClone.filter((home) => home.id !== id);
+
+            return {
+                ...state,
+                homes: homesClone,
             };
         default:
             return state;

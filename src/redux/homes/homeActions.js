@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { SET_HOMES, SET_HOMES_ERROR, CLEAR_HOMES } from '../actionTypes';
+import { SET_HOMES, SET_HOMES_ERROR, CLEAR_HOMES, DELETE_HOME } from '../actionTypes';
 
 const apiUrl = process.env.REACT_APP_BASE_API_URL;
 
@@ -27,4 +27,23 @@ export const setHomesError = (error) => {
 
 export const clearHomes = () => {
     return { type: CLEAR_HOMES };
+};
+
+export const removeHome = (homeId) => {
+    return (dispatch) => {
+        axios
+            .delete(`${apiUrl}/homes/${homeId}`)
+            .then((response) => {
+                if (response.status === 200) {
+                    dispatch(deleteHome(homeId));
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+};
+
+export const deleteHome = (id) => {
+    return { type: DELETE_HOME, id };
 };

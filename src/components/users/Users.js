@@ -1,26 +1,41 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faTrash, faPlus } from '@fortawesome/free-solid-svg-icons';
-// import Modal from 'react-modal';
 import Loader from '../shared/Loader';
-import { getUsers, clearUsers } from '../../redux/users/userActions';
+import ConfirmationModal from '../shared/ConfirmationModal';
+import { getUsers, clearUsers, removeUser } from '../../redux/users/userActions';
 
 function Users() {
+    const dispatch = useDispatch();
     const users = useSelector((state) => state.users.users);
     const loading = useSelector((state) => state.users.loading);
     const error = useSelector((state) => state.users.error);
-
-    const dispatch = useDispatch();
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [currentUserId, setCurrentUserId] = useState();
 
     useEffect(() => {
         dispatch(getUsers());
-
         return () => {
             dispatch(clearUsers());
+            setCurrentUserId();
         };
     }, [dispatch]);
+
+    const openModal = (userId) => {
+        setModalIsOpen(true);
+        setCurrentUserId(userId);
+    };
+
+    const closeModal = () => {
+        setModalIsOpen(false);
+    };
+
+    const deleteUser = () => {
+        setModalIsOpen(false);
+        dispatch(removeUser(currentUserId));
+    };
 
     const usersList =
         users &&
@@ -32,10 +47,14 @@ function Users() {
                 <td>{user.age}</td>
                 <td>
                     <div className="actions">
-                        <button className="icon-btn edit-btn">
+                        <button type="button" className="icon-btn edit-btn">
                             <FontAwesomeIcon icon={faPen} />
                         </button>
-                        <button className="icon-btn delete-btn">
+                        <button
+                            type="button"
+                            className="icon-btn delete-btn"
+                            onClick={() => openModal(user.id)}
+                        >
                             <FontAwesomeIcon icon={faTrash} />
                         </button>
                     </div>
@@ -86,6 +105,16 @@ function Users() {
                         </table>
                     </div>
                 )
+            )}
+
+            {modalIsOpen && (
+                <ConfirmationModal
+                    isOpen={modalIsOpen}
+                    onClose={closeModal}
+                    onConfirm={deleteUser}
+                    title="Delete User"
+                    bodyText="Are you sure you want to delete this user?"
+                ></ConfirmationModal>
             )}
         </div>
     );
