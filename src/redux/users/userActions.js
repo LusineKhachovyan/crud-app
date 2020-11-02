@@ -47,3 +47,18 @@ export const removeUser = (userId) => {
 export const deleteUser = (id) => {
     return { type: DELETE_USER, id };
 };
+
+export const addUser = (data, history) => {
+    return (dispatch) => {
+        axios
+            .post(`${apiUrl}/users`, {
+                ...data,
+            })
+            .then((response) => {
+                history.push('/');
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+};

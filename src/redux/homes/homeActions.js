@@ -47,3 +47,18 @@ export const removeHome = (homeId) => {
 export const deleteHome = (id) => {
     return { type: DELETE_HOME, id };
 };
+
+export const addHome = (data, history) => {
+    return (dispatch) => {
+        axios
+            .post(`${apiUrl}/homes`, {
+                ...data,
+            })
+            .then((response) => {
+                history.push('/homes');
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+};

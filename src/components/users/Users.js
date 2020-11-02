@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faTrash, faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -119,5 +120,13 @@ function Users() {
         </div>
     );
 }
+
+Users.propTypes = {
+    // hideChangePassword: PropTypes.func,
+    // changePassword: PropTypes.func,
+    // setChangePasswordError: PropTypes.func,
+    // changePasswordSuccess: PropTypes.bool,
+    // changePasswordError: PropTypes.string,
+};
 
 export default Users;

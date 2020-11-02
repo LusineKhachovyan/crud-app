@@ -27,6 +27,7 @@ function Homes() {
     const openModal = (homeId) => {
         setModalIsOpen(true);
         setCurrentHomeId(homeId);
+        console.log(homeId);
     };
 
     const closeModal = () => {
@@ -42,7 +43,7 @@ function Homes() {
         homes &&
         homes.map((home) => (
             <tr key={home.id}>
-                <td>{home.userId}</td>
+                <td>{home.user}</td>
                 <td>{home.title}</td>
                 <td>{home.location}</td>
                 <td>{home.land}</td>

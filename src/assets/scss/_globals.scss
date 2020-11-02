@@ -1,14 +1,10 @@
-html {
-    height: 100%;
-}
-
 body {
     font-family: 'Open Sans', sans-serif;
     font-size: 16px;
     padding: 60px 0 30px;
     position: relative;
-    height: 100%;
     color: #333;
+    min-height: 100vh;
     min-width: 1260px;
 }
 
@@ -73,11 +69,14 @@ sup {
     padding: 10px 25px;
     font-family: 'Open Sans', sans-serif;
     font-size: 16px;
+    line-height: 22px;
     border-radius: 5px;
     font-weight: 600;
     background: none;
     min-width: 120px;
     border: 1px solid;
+    text-align: center;
+    display: inline-block;
 
     &.sm {
         font-size: 14px;
@@ -116,6 +115,10 @@ sup {
         span {
             margin-left: 10px;
         }
+    }
+
+    &:disabled {
+        opacity: 0.5;
     }
 }
 

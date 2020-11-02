@@ -76,6 +76,14 @@
         &__option--is-selected {
             background: #0785da;
         }
+
+        &-container {
+            &.invalid {
+                .react-select__control {
+                    border-color: red !important;
+                }
+            }
+        }
     }
 
     .error-msg {
